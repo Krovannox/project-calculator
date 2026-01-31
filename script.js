@@ -21,6 +21,13 @@ const buttons = document.getElementById("buttons-box");
 
 display.value = "0";
 
+function clear() {
+    display.value = "0";
+    a = 0;
+    operator = null;
+    b = null;
+}
+
 buttons.addEventListener("click", (e) => {
     if (!e.target.classList.contains("btn")) return; // Prevents passing a value from clicking in between buttons
     
@@ -30,6 +37,12 @@ buttons.addEventListener("click", (e) => {
 // Main block
 function handleEvent(buttonValue) {
     console.log(buttonValue);
+
+    // Clear button
+    if (buttonValue === "C") {
+        clear();
+        return;
+    }
 
     // Display section
     if (display.value === "0") {
