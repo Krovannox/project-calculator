@@ -49,6 +49,16 @@ function handleEvent(buttonValue) {
         return display.value = display.value / 100;
     }
 
+    // Return (⌫) button
+    if (buttonValue === "⌫") {
+        if (display.value === "0") return;
+        if (display.value.length === 1) {
+            return display.value = "0";
+        } else {
+            return display.value = display.value.slice(0, -1);
+        }
+    }
+
     // Display section
     if (display.value === "0") {
         display.value = buttonValue;
