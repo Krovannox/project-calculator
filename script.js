@@ -28,9 +28,13 @@ buttons.addEventListener("click", (e) => {
 });
 
 // Main block
-function handleEvent(value) {
-    console.log(value);
+function handleEvent(buttonValue) {
+    console.log(buttonValue);
 
     // Display section
-    display.value += value;
+    if (display.value === "0") {
+        display.value = buttonValue;
+    } else {
+        display.value += buttonValue;
+    }
 }
