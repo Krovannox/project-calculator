@@ -59,6 +59,16 @@ function handleEvent(buttonValue) {
         }
     }
 
+    // Plus-Minus (±) button
+    if (buttonValue === "±") {
+        if (display.value === "0") return;
+        if (!display.value.includes("-")) {
+            return display.value = "-" + display.value;
+        } else {
+            return display.value = display.value.slice(1);
+        }
+    }
+
     // Display section
     if (display.value === "0") {
         display.value = buttonValue;
