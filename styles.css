@@ -1,0 +1,86 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+}
+
+#calculator-frame {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 400px;
+    padding: 24px;
+    margin-top: 10vh;
+    border-radius: 12px;
+    background-color: hsl(240, 15%, 10%);
+}
+
+#display-box {
+    width: 100%;
+    height: 120px;
+    margin-bottom: 12px;
+    text-align: right;
+    font-size: 5.5rem;
+    font-family: monospace, sans-serif;
+    border: none;
+    border-radius: 12px;
+    padding: 10px;
+    background-color: hsl(60, 5%, 95%);
+}
+
+#buttons-box {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 7px;
+}
+
+.btn {
+    width: calc((100% - 3 * 7px) / 4);
+    aspect-ratio: 1 / 1;
+    font-size: 1.9rem;
+    font-family: monospace, sans-serif;
+    border-radius: 12px;
+    border: none;
+    background-color: hsl(240, 5%, 25%);
+    color: hsl(60, 5%, 95%);
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: hsl(240, 5%, 35%);
+}
+
+.btn:active {
+    background-color: hsl(240, 5%, 45%);
+}
+
+.btn.modifier {
+    background-color: hsl(352, 100%, 30%);
+}
+
+.btn.modifier:hover {
+    background-color: hsl(352, 100%, 38%);
+}
+
+.btn.modifier:active {
+    background-color: hsl(352, 100%, 48%);
+}
+
+.btn.operator {
+    background-color: hsl(268, 52%, 35%);
+}
+
+.btn.operator:hover {
+    background-color: hsl(268, 52%, 45%);
+}
+
+.btn.operator:active {
+    background-color: hsl(268, 52%, 55%);
+}
