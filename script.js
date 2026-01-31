@@ -52,7 +52,7 @@ function handleEvent(buttonValue) {
     // Return (⌫) button
     if (buttonValue === "⌫") {
         if (display.value === "0") return;
-        if (display.value.length === 1) {
+        if (display.value.length === 1 || (display.value.length === 2 && display.value.includes("-"))) {
             return display.value = "0";
         } else {
             return display.value = display.value.slice(0, -1);
