@@ -38,10 +38,15 @@ buttons.addEventListener("click", (e) => {
 function handleEvent(buttonValue) {
     console.log(buttonValue);
 
-    // Clear button
+    // Clear (C) button
     if (buttonValue === "C") {
         clear();
         return;
+    }
+
+    // Percentage (%) button
+    if (buttonValue === "%") {
+        return display.value = display.value / 100;
     }
 
     // Display section
