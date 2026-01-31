@@ -52,6 +52,7 @@ function handleEvent(buttonValue) {
     // Return (⌫) button
     if (buttonValue === "⌫") {
         if (display.value === "0") return;
+        
         if (display.value.length === 1 || (display.value.length === 2 && display.value.includes("-"))) {
             return display.value = "0";
         } else {
@@ -62,11 +63,19 @@ function handleEvent(buttonValue) {
     // Plus-Minus (±) button
     if (buttonValue === "±") {
         if (display.value === "0") return;
+        
         if (!display.value.includes("-")) {
             return display.value = "-" + display.value;
         } else {
             return display.value = display.value.slice(1);
         }
+    }
+
+    // Decimal Point (.) button
+    if (buttonValue === ".") {
+        if (display.value.includes(".")) return;
+        
+        return display.value = display.value + ".";
     }
 
     // Display section
