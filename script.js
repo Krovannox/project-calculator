@@ -1,11 +1,13 @@
 // Log Status
 function logStatus(buttonValue) {
+    console.log(`XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX`);
     console.log(`Button pressed: [${buttonValue}]`);
     console.log(`Current value of (a): ${a}`);
     console.log(`Current value of (operator): ${operator}`);
     console.log(`Current value of (b): ${b}`);
     console.log(`==========================================`);
     console.log(`Display value: ${display.value}`);
+    console.log(`Reset display: ${resetDisplay}`);
     console.log(`==========================================`);
 }
 
@@ -40,6 +42,8 @@ function operate(numA, numB, operator) {
 let a = 0;
 let operator = null;
 let b = null;
+
+let resetDisplay = false;
 
 // Event handlers block
 const display = document.getElementById("display-box");
@@ -104,21 +108,43 @@ function handleEvent(buttonValue, buttonClass) {
 
     // Operators buttons
     if (buttonClass.contains("operator") && buttonValue !== "=") {
-        a = display.value;
-        display.value = "";
-        operator = buttonValue;
-        logStatus(buttonValue);
-        return;
+        if (a !== "0" && operator !== null) {
+            console.log("FLAG B");
+            b = display.value;
+            display.value = operate(a, b, operator);
+            a = display.value;
+            operator = buttonValue;
+            resetDisplay = true;
+            logStatus(buttonValue);
+            return;
+        } else {
+            console.log("FLAG A");
+            a = display.value;
+            display.value = "";
+            operator = buttonValue;
+
+            logStatus(buttonValue);
+            return;
+        }
     }
 
     if (buttonValue === "=") {
         b = display.value;
+        display.value = operate(a, b, operator);
+        a = display.value;
 
-        return display.value = operate(a, b, operator);
+        operator = null;
+        b = null;
+        resetDisplay = true;
+        logStatus(buttonValue);
+        return;
     }
 
     // Display section
-    if (display.value === "0") {
+    if (resetDisplay) {
+        display.value = buttonValue;
+        resetDisplay = false;
+    } else if (display.value === "0") {
         display.value = buttonValue;
     } else {
         display.value += buttonValue;
