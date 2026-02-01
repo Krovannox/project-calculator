@@ -1,3 +1,14 @@
+// Log Status
+function logStatus(buttonValue) {
+    console.log(`Button pressed: [${buttonValue}]`);
+    console.log(`Current value of (a): ${a}`);
+    console.log(`Current value of (operator): ${operator}`);
+    console.log(`Current value of (b): ${b}`);
+    console.log(`==========================================`);
+    console.log(`Display value: ${display.value}`);
+    console.log(`==========================================`);
+}
+
 // Calculations block
 const add = (a, b) => a + b;
 const subtract = (a, b) => a - b;
@@ -7,6 +18,21 @@ const divide = (a, b) => a / b;
 function operate(numA, numB, operator) {
     const a = Number(numA);
     const b = Number(numB);
+
+    switch (operator) {
+        case "+":
+            operator = add;
+            break;
+        case "-":
+            operator = subtract;
+            break;
+        case "×":
+            operator = multiply;
+            break
+        case "÷":
+            operator = divide;
+            break;
+    }
 
     return operator(a, b);
 }
@@ -31,13 +57,11 @@ function clear() {
 buttons.addEventListener("click", (e) => {
     if (!e.target.classList.contains("btn")) return; // Prevents passing a value from clicking in between buttons
     
-    handleEvent(e.target.dataset.value);
+    handleEvent(e.target.dataset.value, e.target.classList);
 });
 
 // Main block
-function handleEvent(buttonValue) {
-    console.log(buttonValue);
-
+function handleEvent(buttonValue, buttonClass) {
     // Clear (C) button
     if (buttonValue === "C") {
         clear();
@@ -78,10 +102,27 @@ function handleEvent(buttonValue) {
         return display.value = display.value + ".";
     }
 
+    // Operators buttons
+    if (buttonClass.contains("operator") && buttonValue !== "=") {
+        a = display.value;
+        display.value = "";
+        operator = buttonValue;
+        logStatus(buttonValue);
+        return;
+    }
+
+    if (buttonValue === "=") {
+        b = display.value;
+
+        return display.value = operate(a, b, operator);
+    }
+
     // Display section
     if (display.value === "0") {
         display.value = buttonValue;
     } else {
         display.value += buttonValue;
     }
+
+    logStatus(buttonValue);
 }
