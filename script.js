@@ -129,6 +129,8 @@ function handleEvent(buttonValue, buttonClass) {
     }
 
     if (buttonValue === "=") {
+        if (operator === null) return;
+
         b = display.value;
         display.value = operate(a, b, operator);
         a = display.value;
