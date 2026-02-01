@@ -15,7 +15,7 @@ function logStatus(buttonValue) {
 const add = (a, b) => a + b;
 const subtract = (a, b) => a - b;
 const multiply = (a, b) => a * b;
-const divide = (a, b) => b = "0" ? "Error": (a / b);
+const divide = (a, b) => b === 0 ? "Error": (a / b);
 
 function operate(numA, numB, operator) {
     const a = Number(numA);
@@ -39,7 +39,7 @@ function operate(numA, numB, operator) {
     return operator(a, b);
 }
 
-let a = 0;
+let a = "0";
 let operator = null;
 let b = null;
 
