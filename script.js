@@ -17,6 +17,14 @@ const subtract = (a, b) => a - b;
 const multiply = (a, b) => a * b;
 const divide = (a, b) => b === 0 ? "Error": (a / b);
 
+function roundNumber(result) {
+    if (!Number.isInteger(result)) {
+        return result.toFixed(3);
+    } else {
+        return result;
+    }
+}
+
 function operate(numA, numB, operator) {
     const a = Number(numA);
     const b = Number(numB);
@@ -36,7 +44,7 @@ function operate(numA, numB, operator) {
             break;
     }
 
-    return operator(a, b);
+    return roundNumber(operator(a, b));
 }
 
 let a = "0";
@@ -62,11 +70,32 @@ function clear() {
 buttons.addEventListener("click", (e) => {
     if (!e.target.classList.contains("btn")) return; // Prevents passing a value from clicking in between buttons
     
-    handleEvent(e.target.dataset.value, e.target.classList);
+    handleEvent(e.target.dataset.value);
 });
 
+document.addEventListener("keydown", (e) => {
+    const allowedKeys = "0123456789-+.";
+    const keyMap = {
+        "Enter": "=",
+        "/": "÷",
+        "*": "×",
+        "Backspace": "⌫",
+        "Escape": "C",
+    };
+
+    if (allowedKeys.includes(e.key)) {
+        e.preventDefault();
+        handleEvent(e.key);
+    }
+
+    if (e.key in keyMap) {
+        e.preventDefault();
+        handleEvent(keyMap[e.key]);
+    }
+})
+
 // Main block
-function handleEvent(buttonValue, buttonClass) {
+function handleEvent(buttonValue) {
     // Clear (C) button
     if (buttonValue === "C") {
         clear();
@@ -112,11 +141,13 @@ function handleEvent(buttonValue, buttonClass) {
         }
 
         // Operators buttons
-        if (buttonClass.contains("operator") && buttonValue !== "=") {
+        const operatorButtons = "÷×-+";
+        if (operatorButtons.includes(buttonValue)) {
             if (a !== "0" && operator !== null) {
                 console.log("FLAG B");
                 b = display.value;
                 display.value = operate(a, b, operator);
+                
                 a = display.value;
                 operator = buttonValue;
                 resetDisplay = true;
@@ -124,6 +155,7 @@ function handleEvent(buttonValue, buttonClass) {
                 return;
             } else {
                 console.log("FLAG A");
+                
                 a = display.value;
                 display.value = "";
                 operator = buttonValue;
@@ -137,7 +169,8 @@ function handleEvent(buttonValue, buttonClass) {
             if (operator === null) return;
 
             b = display.value;
-            display.value = operate(a, b, operator);
+            display.value = operate(a, b, operator)
+            
             a = display.value;
 
             operator = null;
