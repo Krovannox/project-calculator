@@ -53,9 +53,10 @@ display.value = "0";
 
 function clear() {
     display.value = "0";
-    a = 0;
+    a = "0";
     operator = null;
     b = null;
+    resetDisplay = false;
 }
 
 buttons.addEventListener("click", (e) => {
@@ -72,74 +73,79 @@ function handleEvent(buttonValue, buttonClass) {
         return;
     }
 
-    // Percentage (%) button
-    if (buttonValue === "%") {
-        return display.value = display.value / 100;
-    }
-
-    // Return (⌫) button
-    if (buttonValue === "⌫") {
-        if (display.value === "0") return;
-        
-        if (display.value.length === 1 || (display.value.length === 2 && display.value.includes("-"))) {
-            return display.value = "0";
-        } else {
-            return display.value = display.value.slice(0, -1);
+    // Handles Error message
+    if (display.value === "Error") {
+        return;
+    } else {
+        // Percentage (%) button
+        if (buttonValue === "%") {
+            return display.value = display.value / 100;
         }
-    }
 
-    // Plus-Minus (±) button
-    if (buttonValue === "±") {
-        if (display.value === "0") return;
-        
-        if (!display.value.includes("-")) {
-            return display.value = "-" + display.value;
-        } else {
-            return display.value = display.value.slice(1);
+        // Return (⌫) button
+        if (buttonValue === "⌫") {
+            if (display.value === "0") return;
+            
+            if (display.value.length === 1 || (display.value.length === 2 && display.value.includes("-"))) {
+                return display.value = "0";
+            } else {
+                return display.value = display.value.slice(0, -1);
+            }
         }
-    }
 
-    // Decimal Point (.) button
-    if (buttonValue === ".") {
-        if (display.value.includes(".")) return;
-        
-        return display.value = display.value + ".";
-    }
+        // Plus-Minus (±) button
+        if (buttonValue === "±") {
+            if (display.value === "0") return;
+            
+            if (!display.value.includes("-")) {
+                return display.value = "-" + display.value;
+            } else {
+                return display.value = display.value.slice(1);
+            }
+        }
 
-    // Operators buttons
-    if (buttonClass.contains("operator") && buttonValue !== "=") {
-        if (a !== "0" && operator !== null) {
-            console.log("FLAG B");
+        // Decimal Point (.) button
+        if (buttonValue === ".") {
+            if (display.value.includes(".")) return;
+            
+            return display.value = display.value + ".";
+        }
+
+        // Operators buttons
+        if (buttonClass.contains("operator") && buttonValue !== "=") {
+            if (a !== "0" && operator !== null) {
+                console.log("FLAG B");
+                b = display.value;
+                display.value = operate(a, b, operator);
+                a = display.value;
+                operator = buttonValue;
+                resetDisplay = true;
+                logStatus(buttonValue);
+                return;
+            } else {
+                console.log("FLAG A");
+                a = display.value;
+                display.value = "";
+                operator = buttonValue;
+
+                logStatus(buttonValue);
+                return;
+            }
+        }
+
+        if (buttonValue === "=") {
+            if (operator === null) return;
+
             b = display.value;
             display.value = operate(a, b, operator);
             a = display.value;
-            operator = buttonValue;
+
+            operator = null;
+            b = null;
             resetDisplay = true;
             logStatus(buttonValue);
             return;
-        } else {
-            console.log("FLAG A");
-            a = display.value;
-            display.value = "";
-            operator = buttonValue;
-
-            logStatus(buttonValue);
-            return;
         }
-    }
-
-    if (buttonValue === "=") {
-        if (operator === null) return;
-
-        b = display.value;
-        display.value = operate(a, b, operator);
-        a = display.value;
-
-        operator = null;
-        b = null;
-        resetDisplay = true;
-        logStatus(buttonValue);
-        return;
     }
 
     // Display section
