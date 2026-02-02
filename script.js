@@ -18,11 +18,15 @@ const multiply = (a, b) => a * b;
 const divide = (a, b) => b === 0 ? "Error": (a / b);
 
 function roundNumber(result) {
-    if (!Number.isInteger(result)) {
-        return result.toFixed(3);
-    } else {
+    if (typeof result !== "number") {
         return result;
     }
+
+    if (!Number.isInteger(result)) {
+        return result.toFixed(3);
+    } 
+    
+    return result;
 }
 
 function operate(numA, numB, operator) {
